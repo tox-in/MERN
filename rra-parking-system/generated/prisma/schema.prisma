@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  owner_name  String
+  national_id String    @unique
+  email       String    @unique
+  phone       String    @unique
+  password    String
+  role        Role      @default(DRIVER)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Vehicle     Vehicle[]
+}
+
+model Vehicle {
+  id           String           @id @default(uuid())
+  isPublic     Boolean          @default(true)
+  company      String?
+  category     CarCategory
+  plate_number String           @unique
+  isActive     Boolean          @default(true)
+  dept         Float            @default(0)
+  owner        User             @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  sessions     ParkingSession[]
+  reports      Report[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([plate_number])
+  @@index([ownerId])
+}
+
+model ParkingSession {
+  id         String    @id @default(uuid())
+  vehicle    Vehicle   @relation(fields: [vehicleId], references: [id])
+  vehicleId  String
+  entry_time DateTime
+  exit_time  DateTime?
+  hasLeft    Boolean   @default(false)
+  duration   Int?
+  price      Float?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Report     Report?
+
+  @@index([vehicleId])
+  @@index([entry_time])
+}
+
+model Report {
+  id               String         @id @default(uuid())
+  vehicle          Vehicle        @relation(fields: [vehicleId], references: [id])
+  vehicleId        String
+  company          String?
+  session_duration Int
+  session_datetime DateTime
+  session_price    Float
+  accumulated_debt Float
+  session          ParkingSession @relation(fields: [sessionId], references: [id])
+  sessionId        String         @unique
+  description      String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([vehicleId])
+  @@index([sessionId])
+}
+
+enum Role {
+  DRIVER
+  GATESMAN
+  ADMIN
+}
+
+enum CarCategory {
+  SMALL
+  MINIBUS
+  BUS
+}
