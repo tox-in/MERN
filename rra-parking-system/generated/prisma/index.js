@@ -215,11 +215,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:tony@localhost:5432/rraparkingsystem?schema=public&sslmode=prefer"
+        "value": null
       }
     }
   },
