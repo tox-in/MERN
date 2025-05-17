@@ -3,6 +3,10 @@ const { promisify } = require('util');
 const prisma = require('../config/database');
 const { AuthenticationError, AuthorizationError } = require('../utils/errorClasses');
 
+
+/**
+ * Middleware to protect routes that require authentication
+ */
 exports.protect = async (req, res, next) => {
     try {
         let token;
@@ -42,7 +46,10 @@ exports.protect = async (req, res, next) => {
 }
 
 
-//role restriction middleware
+/**
+ * Middleware to restrict access based on user roles
+ * @param  {...string} roles - Allowed roles
+ */
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!req.user) {
@@ -56,7 +63,11 @@ exports.restrictTo = (...roles) => {
     };
 };
 
-//vhe if user is the owner of the resource
+/**
+ * Middleware to check if the user is the owner of the resource or has higher privileges
+ * @param {string} model - The model name
+ * @param {string} paramIdField - The request parameter containing the resource ID
+ */
 exports.isOwnerOrAdmin = async (model, paramIdField) => {
     return async (req, res, next) => {
         try {
