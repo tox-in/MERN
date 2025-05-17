@@ -13,6 +13,6 @@ npx prisma init --datasource-provider postgresql
 
 JS
 ===
-npm i @prisma/client bcrypt cors dotenv express express-rate-limit helmet joi jsonwebtoken morgan nodemailer swagger-ui-express winston zod
+npm i @prisma/client bcrypt cors dotenv express express-rate-limit helmet joi jsonwebtoken morgan nodemailer swagger-ui-express swagger-ui-express winston zod
 
 npm i -D jest nodemon prisma supertest
