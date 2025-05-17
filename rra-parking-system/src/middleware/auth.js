@@ -128,3 +128,6 @@ exports.isOwnerOrAdmin = async (model, paramIdField) => {
         }
     };
 };
+
+exports.authenticate = exports.protect;
+exports.authorize = exports.restrictTo;
