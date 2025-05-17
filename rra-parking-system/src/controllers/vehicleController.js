@@ -164,10 +164,10 @@ const deleteVehicle = async (req, res, next) => {
 
 
 module.exports = {
-    registerCar,
-    getAllCars,
-    getCarById,
-    updateCar,
-    updateCarStatus,
-    deleteCar
+    registerVehicle,
+    getAllVehicles,
+    getVehicleById,
+    updateVehicle,
+    updateVehicleStatus,
+    deleteVehicle
 };
