@@ -8,7 +8,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const vehicleRoutes = require('./routes/vehicleRoutes');
-const sessionRoutes = require('./routes/sessionRoutes');
+const parkingSessionRoutes = require('./routes/parkingSessionRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./config/logger');
@@ -28,14 +28,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/vehicles', vehicleRoutes);
-app.use('/api/sessions', sessionRoutes);
+app.use('/api/sessions', parkingSessionRoutes);
 app.use('/api/reports', reportRoutes);
 
 // Swagger setup
-if (process.env.NODE_ENV !== 'production') {
-    const swaggerDocument = require('./swagger.json');
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-};
+// if (process.env.NODE_ENV !== 'production') {
+//     const swaggerDocument = require('./swagger.json');
+//     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// };
 
 //health check
 app.get('/health', (req, res) => {
@@ -54,6 +54,13 @@ app.all('*', (req, res, next) => {
         }
     });
 });
+
+app._router.stack.forEach((r) => {
+    if (r.route && r.route.path) {
+      console.log(r.route.path);
+    }
+  });
+  
 
 app.use(errorHandler); //error handling
 

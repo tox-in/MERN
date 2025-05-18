@@ -1,7 +1,7 @@
 const prisma = require('../config/database');
 const { NotFoundError, ValidationError } = require('../utils/errorClasses');
 const reportService = require('./reportService');
-const emailService = require('../utils/emailService');
+const emailService = require('./emailService');
 
 /**
  * Create a new parking session (entry)
