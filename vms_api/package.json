@@ -14,7 +14,8 @@
     "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema.prisma --name=init",
     "prisma:studio": "npx prisma studio --schema src/prisma/schema.prisma",
     "prisma:all": "yarn prisma:migrate && yarn prisma:gen",
-    "prisma:seed": "ts-node src/seeders/seed.ts"
+    "prisma:seed": "ts-node src/seeders/seed.ts",
+    "docker:build": "docker build -t uleslie/ne-nodejs .",
   },
   "author": "tonyherve",
   "license": "MIT",

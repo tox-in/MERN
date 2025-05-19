@@ -34,7 +34,7 @@ CMD ["npm", "dev"]
 #    docker ps -a 
 #    docker images
 #    cd ..
-#   docker build -t .\vms_api\ -t 
+#   docker build -t .\vms_api\ -t vms_api:latest
 
 #use git for removing the submodulity
 # rm -rf vms_api/.git #Bash
